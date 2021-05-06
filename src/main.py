@@ -1,5 +1,6 @@
 import sys
 import enum
+import SensorLib
 
 class Runtime(enum.Enum):
     Simulation = 0
