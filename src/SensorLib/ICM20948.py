@@ -30,9 +30,8 @@ def getRawData():
             sleep(1)
         
 def getFusionData(rawData):
-    print(rawData[2])
     Fusion.update((rawData[0][0],rawData[0][1],rawData[0][2]),(rawData[1][0],rawData[1][1],rawData[1][2]),(rawData[2][0],rawData[2][1],rawData[2][2]))
-    print(Fusion.pitch)
+    print(Fusion.pitch, Fusion.roll)
                 
 if __name__ == '__main__':
     try:

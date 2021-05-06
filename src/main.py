@@ -13,11 +13,11 @@ class RState(enum.Enum):
         # Validate Power Source
         # Validate PHAT Servo
         # Validate Sensors
-            # IMU 20949
-            # XA110 GPS
+            # IMU 20948
+            # GPS XA110 
             # CCS811
             # BME280
-            # BMO080 (x2)
+            # IMU BMO080 (x2)
         # Validate Servo Motor
             # X and Y Servo Motors (0 , 1 Channels)
     # Validate TVC Code
