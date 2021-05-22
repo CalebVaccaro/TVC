@@ -1,42 +1,53 @@
 from __future__ import print_function
 import qwiic_icm20948
 import time
+import utime
 import sys
-from fusion import Fusion
+import json
+from SensorLib.IMUFusion import Fusion
 
-def getSensor():
+class ICM_IMU:
 
-    imu20948 = qwiic_icm20948.QwiicIcm20948()
+    def getSensor():
 
-    if imu20948.connected == False:
-        print("The Qwiic ICM20948 device isn't connected to the system. Please check your connection", file=sys.stderr)
-        return
+        imu20948 = qwiic_icm20948.QwiicIcm20948()
 
-    imu20948.begin()
-    print("IMU-20948 Is Communicating", file=sys.stderr)
-    return imu20948
+        if imu20948.connected == False:
+            print("The Qwiic ICM20948 device isn't connected to the system.", file=sys.stderr)
+            return
 
-def getRawData():
-    while True:
-            if IMU.dataReady():
-                IMU.getAgmt()
-                return getFusionData(((IMU.axRaw,IMU.ayRaw,IMU.azRaw)
-                                 ,(IMU.gxRaw,IMU.gyRaw,IMU.gzRaw)
-                                 ,(IMU.mxRaw,IMU.myRaw,IMU.mzRaw)))
-            else:
-                print("Waiting for data")
-                time.sleep(0.5)
-                return (0,0,0)
-            sleep(1)
-        
-def getFusionData(rawData):
-    Fusion.update((rawData[0][0],rawData[0][1],rawData[0][2]),(rawData[1][0],rawData[1][1],rawData[1][2]),(rawData[2][0],rawData[2][1],rawData[2][2]))
-    print(Fusion.pitch, Fusion.roll)
-                
-if __name__ == '__main__':
-    try:
-        IMU = getSensor()
-        getFusionData(getRawData())
-    except (KeyboardInterrupt, SystemExit) as exErr:
-        print("Ending Basic Example.")
-        sys.exit(0)
+        imu20948.begin()
+        print("IMU-20948 Is Communicating", file=sys.stderr)
+        return imu20948
+
+    def getFusionData(IMU):
+        if IMU.dataReady():
+            IMU.getAgmt()
+            mx, my, mz = (IMU.mxRaw,IMU.myRaw,IMU.mzRaw)
+            ax, ay, az = (IMU.axRaw,IMU.ayRaw,IMU.azRaw)
+            gx, gy, gz = (IMU.gxRaw,IMU.gyRaw,IMU.gzRaw)
+            string = json.dumps(Fusion.getIMUFusion((ay,ax,az),(gy,gx,gz),(my,mx,mz)))
+            return string
+        else:
+            string = json.dumps((0,0))
+            return string
+
+    def getRawData(IMU):
+        if IMU.dataReady():
+            IMU.getAgmt()
+            mx, my, mz = (IMU.mxRaw,IMU.myRaw,IMU.mzRaw)
+            ax, ay, az = (IMU.axRaw,IMU.ayRaw,IMU.azRaw)
+            gx, gy, gz = (IMU.gxRaw,IMU.gyRaw,IMU.gzRaw)
+            string = json.dumps(((ay,ax,az),(gy,gx,gz),(my,mx,mz)), sort_keys=True, default=str)
+            return string
+        else:
+            string = json.dumps((0,0,0))
+            return string
+
+#if __name__ == '__main__':
+    #IMU = ICM_IMU.getSensor()
+    #while True:
+        #try: 
+            #print(ICM_IMU.getRawData())
+        #except (KeyboardInterrupt, SystemExit) as exErr:
+            #print("no data")

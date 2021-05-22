@@ -2,36 +2,36 @@ import qwiic_titan_gps
 import pynmea2
 import sys
 from time import sleep
+import json
+import struct
+import ast
 
-def getSensor():
+class XGPS:
 
-    qwiicGPS = qwiic_titan_gps.QwiicTitanGps()
+    def getSensor():
 
-    if qwiicGPS.connected is False:
-        print("GPS-XA110 Not Found", file=sys.stderr)
-        sys.exit(0)
-        return
+        qwiicGPS = qwiic_titan_gps.QwiicTitanGps()
 
-    qwiicGPS.begin()
-    print("GPS-XA110 Is Communicating", file=sys.stderr)
-    return qwiicGPS
+        if qwiicGPS.connected is False:
+            print("GPS-XA110 Not Found", file=sys.stderr)
+            sys.exit(0)
+            return None
 
-def getRawData():
-    while True:
-        if GPS.get_nmea_data() is True:
-            getLatLong(GPS.gnss_messages)
-        sleep(1)
-        
-def getLatLong(rawData):
-     print("Latitude: {}, Longitude: {}, Time: {}".format(
-                rawData['Latitude'],
-                rawData['Longitude'],
-                rawData['Time']))
-                
-if __name__ == '__main__':
-    try:
-        GPS = getSensor()
-        getLatLong(getRawData())
-    except (KeyboardInterrupt, SystemExit) as exErr:
-        print("Ending Basic Example.")
-        sys.exit(0)
+        qwiicGPS.begin()
+        print("GPS-XA110 Is Communicating", file=sys.stderr)
+        return qwiicGPS
+
+    def getRawData(GPS):
+        while True:
+            if GPS.get_nmea_data() is True:
+                return XGPS.getLatLong(GPS.gnss_messages)
+            
+    def getLatLong(rawData):
+        return json.dumps(rawData, sort_keys=True, default=str)
+     
+#if __name__ == 'XGPS':
+    #try:
+        #GPS = getSensor()
+        #getLatLong(getRawData())
+    #except (KeyboardInterrupt, SystemExit) as exErr:
+        #print("Ending GPS Data")
