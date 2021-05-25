@@ -12,6 +12,7 @@ l = Logger
 
 if __name__ == '__main__':
     
+    # Create File Lurk Before File
     l.LogLurk()
     
     # Flight Setup
@@ -28,4 +29,5 @@ if __name__ == '__main__':
     c.SetControlState(control)
     c.controlSwitch(control)
     
+    # Start Logging Data
     l.LogInfo()

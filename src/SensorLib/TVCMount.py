@@ -19,7 +19,7 @@ class Servos():
         # Moves servo position to 90 degrees (2ms), Channel 0
         test.move_servo_position(1, 45)
         
-    def TestServoContinuous():
+    def TestServosContinuous():
         
         # Restart Servo Hat (in case Hat is frozen/locked)
         test.restart()

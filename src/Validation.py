@@ -9,15 +9,21 @@ def ValidateSensors():
     # Get Sensors
     GPS = XGPS.getSensor()
     print("GPS Validated")
+    sleep(.5)
     IMU209 = ICM_IMU.getSensor()
+    sleep(.5)
     IMU080 = BNO_IMU.getSensor()
     print("IMUs Validated")
+    sleep(.5)
     print("Sensors Validated")
 
-def ValidateTVCMount():
+def ValidateTVCMount(cont):
     sleep(2)
     print("...Moving Motors...")
-    Servos.TestServos()
+    if cont is True:
+        Servos.TestServosContinuous()
+    else:
+        Servos.TestServos()
     print("end servo testing")
 
 def ValidateBattery():
