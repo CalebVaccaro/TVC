@@ -201,17 +201,17 @@ def runExample():
                 # Remove the `#` for the following lines to 
                 # display accelerometer readings on SerLCD
 
-                #myLCD.setCursor(8,0)
-                #myLCD.print("aX")
-                #myLCD.print(str(aX))
+                myLCD.setCursor(8,0)
+                myLCD.print("aX")
+                myLCD.print(str(aX))
 
-                #myLCD.setCursor(0,1)
-                #myLCD.print("aY")
-                #myLCD.print(str(aY))
+                myLCD.setCursor(0,1)
+                myLCD.print("aY")
+                myLCD.print(str(aY))
 
-                #myLCD.setCursor(8,1)
-                #myLCD.print("aZ")
-                #myLCD.print(str(aZ))
+                myLCD.setCursor(8,1)
+                myLCD.print("aZ")
+                myLCD.print(str(aZ))
                 
                 print(\
                  ' aX:', '{: 4.1f}'.format(aX)\
@@ -225,7 +225,19 @@ def runExample():
                 , '\t, mZ:', '{: 4.1f}'.format(mZ)\
                 , '\n'\
                 )
+                
+                myLCD.setCursor(8,0)
+                myLCD.print("BaX")
+                myLCD.print(str(Bax))
 
+                myLCD.setCursor(0,1)
+                myLCD.print("BaY")
+                myLCD.print(str(Bay))
+
+                myLCD.setCursor(8,1)
+                myLCD.print("BaZ")
+                myLCD.print(str(Baz))
+                
                 print(\
                  ' aX:', '{: 4.1f}'.format(Bax)\
                 , ' \t, aY:', '{: 4.1f}'.format(Bay)\
@@ -239,7 +251,7 @@ def runExample():
                 , '\n'\
                 )
 
-                time.sleep(1) # small delay so that the screen doesn't flicker
+                time.sleep(.75) # small delay so that the screen doesn't flicker
             else:
                 print("Waiting for data")
                 time.sleep(0.5)

@@ -4,26 +4,28 @@ from enum_switch import Switch
 from time import sleep
 from flight import FlightClass
 from control import ControlClass
-
+from logger import Logger
 
 f = FlightClass
 c = ControlClass
+l = Logger
 
 if __name__ == '__main__':
     
+    l.LogLurk()
+    
     # Flight Setup
     flight = f.flight
-    print(flight)
     
     # Set Flight Data
     f.SetFlightState(flight)
-    print(f.flightSwitch(flight))
+    f.flightSwitch(flight)
     
     # Control Setup
     control = c.control
     
     # Set Control Data
     c.SetControlState(control)
-    print(c.controlSwitch(control))
+    c.controlSwitch(control)
     
-    
+    l.LogInfo()

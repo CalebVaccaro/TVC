@@ -7,6 +7,8 @@ import json
 from SensorLib.IMUFusion import Fusion
 
 class ICM_IMU:
+    
+    imu = None
 
     def getSensor():
 
@@ -17,6 +19,7 @@ class ICM_IMU:
             return
 
         imu20948.begin()
+        ICM_IMU.imu = imu20948
         print("IMU-20948 Is Communicating", file=sys.stderr)
         return imu20948
 

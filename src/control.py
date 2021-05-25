@@ -69,8 +69,6 @@ class ControlSwitch(Switch):
     
     def Completed(self):
         return "Completed"
-        
-    
 
 class ControlClass():
 
@@ -86,9 +84,11 @@ class ControlClass():
     # CONTROL STATES
 
     def ValidateLaunch():
+        print("Validating Launch...")
+        sleep(1)
+        Validation.ValidateBattery()
         sleep(1)
         Validation.ValidateSensors()
-        print("Validating Launch...")
         
     def ARMED():
         sleep(2)

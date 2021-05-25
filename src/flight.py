@@ -3,12 +3,15 @@ from enum_switch import Switch
 
 class FlightSwitch(Switch):
     def Sim(self):
+        FlightClass.Sim()
         return "Sim"
 
     def Test(self):
+        FlightClass.Test()
         return "Test"
 
     def REAL(self):
+        FlightClass.REAL()
         return "REAL"
         
 class Flight(Enum):
@@ -16,7 +19,6 @@ class Flight(Enum):
     Test = 1
     REAL = 2
         
-
 class FlightClass():
     
     flightSwitch = FlightSwitch(Flight)
@@ -29,7 +31,6 @@ class FlightClass():
         flight = state
 
     # SIMULATION STATES
-
     def Sim():
         print("Simulaton Flight")
 
