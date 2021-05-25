@@ -93,156 +93,158 @@ def runExample():
     while True:
         #declare ledColor a global variable inside here to access it 
         global ledColor
+        try:
+            if bno._data_ready and IMU.getAgmt():
+                 # read all axis and temp from sensor, note this also updates all instance variables
+                Bmx, Bmy, Bmz = bno.magnetic
+                Bax, Bay, Baz = bno.acceleration
+                Bgx, Bgy, Bgz = bno.gyro
+                #the following are the threshold values for each axis is pointing right-side up
+                
 
-        if bno._data_ready:
-            IMU.getAgmt() # read all axis and temp from sensor, note this also updates all instance variables
-            mx, my, mz = bno.magnetic
-            ax, ay, az = bno.acceleration
-            gx, gy, gz = bno.gyro
-            #the following are the threshold values for each axis is pointing right-side up
+                # anything above IMU.azRaw > 16000 is red
+                # ledColor = 1
+                aZPos = 16000
 
-            # anything above IMU.azRaw > 16000 is red
-            # ledColor = 1
-            aZPos = 16000
+                # anything below IMU.azRaw < -16000 is blue
+                # ledColor = 2
+                aZNeg = -16000
 
-            # anything below IMU.azRaw < -16000 is blue
-            # ledColor = 2
-            aZNeg = -16000
+                # anything above IMU.ayRaw > 16100 is green
+                # ledColor = 3
+                ayPos = 16100
 
-            # anything above IMU.ayRaw > 16100 is green
-            # ledColor = 3
-            ayPos = 16100
+                # anything below IMU.ayRaw < -16000 is green
+                # ledColor = 4
+                ayNeg = -16000
 
-            # anything below IMU.ayRaw < -16000 is green
-            # ledColor = 4
-            ayNeg = -16000
+                # anything above IMU.axRaw > 16000 is magenta
+                # ledColor = 5
+                axPos = 16000
 
-            # anything above IMU.axRaw > 16000 is magenta
-            # ledColor = 5
-            axPos = 16000
+                # anything below IMU.axRaw < -16400 is cyan
+                # ledColor = 6
+                axNeg = -16400
 
-            # anything below IMU.axRaw < -16400 is cyan
-            # ledColor = 6
-            axNeg = -16400
+                #adjust color of the LED based on the accelerometer's reading
+                if IMU.azRaw > aZPos and Bay > 5:
+                #if Bay > 5:
+                    # Set LED red
+                    myLCD.setBacklight(255, 0, 0) # Set backlight to bright white
+                    ledColor = 1
+                    myLCD.clearScreen()
+                    myLCD.print("red")
 
-            #adjust color of the LED based on the accelerometer's reading
-            #if az > aZPos:
-            if az > 5:
-                # Set LED red
-                myLCD.setBacklight(255, 0, 0) # Set backlight to bright white
-                ledColor = 1
-                myLCD.clearScreen()
-                myLCD.print("red")
+                #elif az < aZNeg:
+                elif IMU.azRaw < aZNeg and Bay < -5:
+                    # Set LED blue
+                    myLCD.setBacklight(0, 0, 255) # Set backlight to bright white
+                    ledColor = 2
+                    myLCD.clearScreen()
+                    myLCD.print("blue")
 
-            #elif az < aZNeg:
-            elif az < -5:
-                # Set LED blue
-                myLCD.setBacklight(0, 0, 255) # Set backlight to bright white
-                ledColor = 2
-                myLCD.clearScreen()
-                myLCD.print("blue")
+                #elif ay > ayPos:
+                elif IMU.ayRaw > ayPos and Baz < -5:
+                    # Set LED yellow
+                    myLCD.setBacklight(255, 255, 0) # Set backlight to bright white
+                    ledColor = 3
+                    myLCD.clearScreen()
+                    myLCD.print("yellow")
 
-            #elif ay > ayPos:
-            elif ay > 5:
-                # Set LED yellow
-                myLCD.setBacklight(255, 255, 0) # Set backlight to bright white
-                ledColor = 3
-                myLCD.clearScreen()
-                myLCD.print("yellow")
+                #elif ay < ayNeg:
+                elif Baz > 5 and IMU.ayRaw < ayNeg:
+                    # Set LED green
+                    myLCD.setBacklight(0, 255, 0) # Set backlight to bright white
+                    ledColor = 4
+                    myLCD.clearScreen()
+                    myLCD.print("green")
 
-            #elif ay < ayNeg:
-            elif ay < -5:
-                # Set LED green
-                myLCD.setBacklight(0, 255, 0) # Set backlight to bright white
-                ledColor = 4
-                myLCD.clearScreen()
-                myLCD.print("green")
+                #elif ax > axPos:
+                elif Bax > 5 and IMU.axRaw > axPos:
+                    # Set LED magenta
+                    myLCD.setBacklight(255, 0, 255) # Set backlight to bright white
+                    ledColor = 5
+                    myLCD.clearScreen()
+                    myLCD.print("magenta")
 
-            #elif ax > axPos:
-            elif Bax > 5:
-                # Set LED magenta
-                myLCD.setBacklight(255, 0, 255) # Set backlight to bright white
-                ledColor = 5
-                myLCD.clearScreen()
-                myLCD.print("magenta")
+                #elif ax < axNeg:
+                elif Bax < -5 and IMU.axRaw < axNeg:
+                    # Set LED cyan
+                    myLCD.setBacklight(0, 255, 255) # Set backlight to bright white
+                    ledColor = 6
+                    myLCD.clearScreen()
+                    myLCD.print("cyan")
 
-            #elif ax < axNeg:
-            elif Bax < -5 and ax < axNeg:
-                # Set LED cyan
-                myLCD.setBacklight(0, 255, 255) # Set backlight to bright white
-                ledColor = 6
-                myLCD.clearScreen()
-                myLCD.print("cyan")
+                if ledColor == 1:
+                    print("ledColor = red" ,'\n', '\n')
+                elif ledColor == 2:
+                    print("ledColor = blue" ,'\n', '\n')
+                elif ledColor == 3:
+                    print("ledColor = yellow" ,'\n', '\n')
+                elif ledColor == 4:
+                    print("ledColor = green" ,'\n', '\n')
+                elif ledColor == 5:
+                    print("ledColor = magenta" ,'\n', '\n')
+                elif ledColor == 6:
+                    print("ledColor = cyan" ,'\n', '\n')
 
-            if ledColor == 1:
-                print("ledColor = red" ,'\n', '\n')
-            elif ledColor == 2:
-                print("ledColor = blue" ,'\n', '\n')
-            elif ledColor == 3:
-                print("ledColor = yellow" ,'\n', '\n')
-            elif ledColor == 4:
-                print("ledColor = green" ,'\n', '\n')
-            elif ledColor == 5:
-                print("ledColor = magenta" ,'\n', '\n')
-            elif ledColor == 6:
-                print("ledColor = cyan" ,'\n', '\n')
+                aX = IMU.axRaw
+                aY = IMU.ayRaw
+                aZ = IMU.azRaw
+                gX = IMU.gxRaw
+                gY = IMU.gyRaw
+                gZ = IMU.gzRaw
+                mX = IMU.mxRaw
+                mY = IMU.myRaw
+                mZ = IMU.mzRaw
 
-            #aX = IMU.axRaw
-            #aY = IMU.ayRaw
-            #aZ = IMU.azRaw
-            #gX = IMU.gxRaw
-            #gY = IMU.gyRaw
-            #gZ = IMU.gzRaw
-            #mX = IMU.mxRaw
-            #mY = IMU.myRaw
-            #mZ = IMU.mzRaw
-            
-            aX = ax
-            aY = ay
-            aZ = az
-            gX = gx
-            gY = gy
-            gZ = gz
-            mX = mx
-            mY = my
-            mZ = mz
+                # Remove the `#` for the following lines to 
+                # display accelerometer readings on SerLCD
 
-            # Remove the `#` for the following lines to 
-            # display accelerometer readings on SerLCD
+                #myLCD.setCursor(8,0)
+                #myLCD.print("aX")
+                #myLCD.print(str(aX))
 
-            #myLCD.setCursor(8,0)
-            #myLCD.print("aX")
-            #myLCD.print(str(aX))
+                #myLCD.setCursor(0,1)
+                #myLCD.print("aY")
+                #myLCD.print(str(aY))
 
-            #myLCD.setCursor(0,1)
-            #myLCD.print("aY")
-            #myLCD.print(str(aY))
+                #myLCD.setCursor(8,1)
+                #myLCD.print("aZ")
+                #myLCD.print(str(aZ))
+                
+                print(\
+                 ' aX:', '{: 4.1f}'.format(aX)\
+                , ' \t, aY:', '{: 4.1f}'.format(aY)\
+                , '\t, aZ:', '{: 4.1f}'.format(aZ)\
+                , '\n gX:', '{: 4.1f}'.format(gX)\
+                , '\t, gY:', '{: 4.1f}'.format(gY)\
+                , '\t, gZ:', '{: 4.1f}'.format(gZ)\
+                , '\n mX:', '{: 4.1f}'.format(mX)\
+                , '\t, mY:', '{: 4.1f}'.format(mY)\
+                , '\t, mZ:', '{: 4.1f}'.format(mZ)\
+                , '\n'\
+                )
 
-            #myLCD.setCursor(8,1)
-            #myLCD.print("aZ")
-            #myLCD.print(str(aZ))
+                print(\
+                 ' aX:', '{: 4.1f}'.format(Bax)\
+                , ' \t, aY:', '{: 4.1f}'.format(Bay)\
+                , '\t, aZ:', '{: 4.1f}'.format(Baz)\
+                , '\n gX:', '{: 4.1f}'.format(Bgx)\
+                , '\t, gY:', '{: 4.1f}'.format(Bgy)\
+                , '\t, gZ:', '{: 4.1f}'.format(Bgz)\
+                , '\n mX:', '{: 4.1f}'.format(Bmx)\
+                , '\t, mY:', '{: 4.1f}'.format(Bmy)\
+                , '\t, mZ:', '{: 4.1f}'.format(Bmz)\
+                , '\n'\
+                )
 
-            print(\
-             ' aX:', '{: 4.1f}'.format(aX)\
-            , ' \t, aY:', '{: 4.1f}'.format(aY)\
-            , '\t, aZ:', '{: 4.1f}'.format(aZ)\
-            , '\n gX:', '{: 4.1f}'.format(gX)\
-            , '\t, gY:', '{: 4.1f}'.format(gY)\
-            , '\t, gZ:', '{: 4.1f}'.format(gZ)\
-            , '\n mX:', '{: 4.1f}'.format(mX)\
-            , '\t, mY:', '{: 4.1f}'.format(mY)\
-            , '\t, mZ:', '{: 4.1f}'.format(mZ)\
-            , '\n'\
-            )
-
-            time.sleep(1) # small delay so that the screen doesn't flicker
-        else:
-            print("Waiting for data")
-            time.sleep(0.5)
-
-
-
-
+                time.sleep(1) # small delay so that the screen doesn't flicker
+            else:
+                print("Waiting for data")
+                time.sleep(0.5)
+        except:
+            print("wrong data")
 
 if __name__ == '__main__':
     try:
