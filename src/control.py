@@ -2,6 +2,7 @@ from enum import Enum
 from enum_switch import Switch
 from time import sleep
 import Validation
+import Data
 
 # state machine
 class RState(Enum):

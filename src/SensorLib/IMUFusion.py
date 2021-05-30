@@ -3,7 +3,7 @@ import math
 
 class Fusion:
     def getIMUFusion(a,g,m):
-        GYRO_SENS = 65.536 # Each IMU has a specific sensitivity factor that you need to scale raw data into deg/s
+        GYRO_SENS = 65 # Each IMU has a specific sensitivity factor that you need to scale raw data into deg/s
         ACCEL_SENS = 1 # I changed some settings on my openlog board, but normally I would need a scaling factor for the accelerometer as well
         pitch = 0
         roll = 0
@@ -24,6 +24,6 @@ class Fusion:
             pitch = pitch*0.95 + math.atan2(accel[1], math.sqrt(accel[0]**2 + accel[2]**2) )*180/math.pi *0.05
             roll = roll*0.9 + math.atan2(-accel[0], accel[2])*180/math.pi *0.05
         
-        p = (pitch*180/math.pi)
-        r = (roll*180/math.pi)
+        p = ((pitch*180/math.pi)/ACCEL_SENS)
+        r = ((roll*180/math.pi)/ACCEL_SENS)
         return (p,r)
