@@ -10,15 +10,15 @@ from adafruit_bno08x import (
     BNO_REPORT_MAGNETOMETER,
     BNO_REPORT_ROTATION_VECTOR,
 )
-from adafruit_bno08x.bno import BNO08X_I2C
+from SensorLib.BNO080.adafruit_bno08x.i2c import BNO08X2_I2C
 from SensorLib.IMUFusion import Fusion
 import json
 
-class BNO_IMU:
+class BNO2_IMU:
 
     def getSensor():
         i2c = busio.I2C(board.SCL, board.SDA, frequency=800000)
-        bno = BNO08X_I2C(i2c)
+        bno = BNO08X2_I2C(i2c)
 
         if bno is None:
             print("IMU-BNO0802 Not Found", file=sys.stderr)
