@@ -10,7 +10,7 @@ from struct import pack_into
 import adafruit_bus_device.i2c_device as i2c_device
 from . import BNO08X, DATA_BUFFER_SIZE, const, Packet, PacketError
 
-_BNO08X_DEFAULT_ADDRESS = const(0x4A)
+_BNO08X_DEFAULT_ADDRESS = const(0x4a)
 
 
 class BNO08X_I2C(BNO08X):
