@@ -23,9 +23,9 @@ class BME_280:
     def getRawData():
         bme = BME_280.bme
         return str("Humitidy"+str(bme.humidity)
-                + "Pressure"+str(bme.pressure)
-                + "Altitude"+str(bme.altitude_meters)
-                + "Temperature"+str(bme.temperature_fahrenheit - 10))
+                + " , Pressure"+str(bme.pressure)
+                + " , Altitude"+str(bme.altitude_meters)
+                + " , Temperature"+str(bme.temperature_fahrenheit - 10))
 
 #if __name__ == '__main__':
 	#try:

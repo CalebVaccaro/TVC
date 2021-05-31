@@ -1054,7 +1054,8 @@ class BNO08X:  # pylint: disable=too-many-instance-attributes, too-many-public-m
     # pylint:disable=no-self-use
     @property
     def _data_ready(self):
-        print("Not implemented")
+        #print("Not implemented")
+        return self.acceleration is not None and self.gyro is not None and self.magnetic is not None
         # raise RuntimeError("Not implemented")
 
     def hard_reset(self):
