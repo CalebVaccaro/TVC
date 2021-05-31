@@ -16,14 +16,16 @@ class ICM_IMU:
 
         if imu20948.connected == False:
             print("The Qwiic ICM20948 device isn't connected to the system.", file=sys.stderr)
+            sys.exit(0)
             return
 
         imu20948.begin()
         ICM_IMU.imu = imu20948
-        print("IMU-20948 Is Communicating", file=sys.stderr)
+        print("IMU-20948 Is Communicating")
         return imu20948
 
-    def getFusionData(IMU):
+    def getFusionData():
+        IMU = ICM_IMU.imu
         if IMU.dataReady():
             IMU.getAgmt()
             mx, my, mz = (IMU.mxRaw,IMU.myRaw,IMU.mzRaw)
@@ -35,7 +37,8 @@ class ICM_IMU:
             string = json.dumps((0,0))
             return string
 
-    def getRawData(IMU):
+    def getRawData():
+        IMU = ICM_IMU.imu
         if IMU.dataReady():
             IMU.getAgmt()
             mx, my, mz = (IMU.mxRaw,IMU.myRaw,IMU.mzRaw)

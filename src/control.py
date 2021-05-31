@@ -2,7 +2,7 @@ from enum import Enum
 from enum_switch import Switch
 from time import sleep
 import Validation
-import Data
+import data
 
 # state machine
 class RState(Enum):
@@ -85,8 +85,8 @@ class ControlClass():
     # CONTROL STATES
 
     def ValidateLaunch():
-        print("Validating Launch...")
-        sleep(1)
+        print("Validating Launch Components...")
+        sleep(.5)
         Validation.ValidateBattery()
         sleep(1)
         Validation.ValidateSensors()

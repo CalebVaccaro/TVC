@@ -8,6 +8,8 @@ import ast
 
 class XGPS:
 
+    gps = None
+
     def getSensor():
 
         qwiicGPS = qwiic_titan_gps.QwiicTitanGps()
@@ -18,16 +20,15 @@ class XGPS:
             return None
 
         qwiicGPS.begin()
-        print("GPS-XA110 Is Communicating", file=sys.stderr)
+        XGPS.gps = qwiicGPS
+        print("GPS-XA110 Is Communicating")
         return qwiicGPS
 
-    def getRawData(GPS):
+    def getRawData():
+        gps = XGPS.gps
         while True:
-            if GPS.get_nmea_data() is True:
-                return XGPS.getLatLong(GPS.gnss_messages)
-            
-    def getLatLong(rawData):
-        return json.dumps(rawData, sort_keys=True, default=str)
+            if gps.get_nmea_data() is True:
+                return json.dumps(gps.gnss_messages, sort_keys=True, default=str)
      
 #if __name__ == 'XGPS':
     #try:

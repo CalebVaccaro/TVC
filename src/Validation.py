@@ -5,30 +5,34 @@ from SensorLib.IMUBNO0802 import BNO2_IMU
 from SensorLib.BME280 import BME_280
 from SensorLib.TVCMount import Servos
 from time import sleep
+import sys
 
 def ValidateSensors():
+    print("Validating Sensors...", file=sys.stderr)
     # Get Sensors
     GPS = XGPS.getSensor()
-    print("GPS Validated")
+    print("GPS Validated", file=sys.stderr)
     sleep(.5)
     IMU209 = ICM_IMU.getSensor()
     sleep(.5)
     IMU080 = BNO_IMU.getSensor()
     sleep(.5)
     IMU0802 = BNO2_IMU.getSensor()
-    print("IMUs Validated")
+    print("IMUs Validated", file=sys.stderr)
     sleep(.5)
-    print("Sensors Validated")
+    BME280 = BME_280.getSensor()
+    print("Env Sensors Validated", file=sys.stderr)
+    print("Sensors Validated", file=sys.stderr)
 
 def ValidateTVCMount(cont):
     sleep(2)
-    print("...Moving Motors...")
+    print("...Testing Servos...")
     if cont is True:
         Servos.TestServosContinuous()
     else:
         Servos.TestServos()
-    print("end servo testing")
+    print("End Servo Testing")
 
 def ValidateBattery():
-    print("RPI is ON")
+    print("RPI is ON", file=sys.stderr)
 
