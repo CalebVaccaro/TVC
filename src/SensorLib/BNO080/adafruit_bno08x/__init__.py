@@ -149,9 +149,9 @@ _AVAIL_SENSOR_REPORTS = {
     #BNO_REPORT_SHAKE_DETECTOR: (1, 1, 6),
     #BNO_REPORT_STABILITY_CLASSIFIER: (1, 1, 6),
     #BNO_REPORT_ACTIVITY_CLASSIFIER: (1, 1, 16),
-    #BNO_REPORT_RAW_ACCELEROMETER: (1, 3, 16),
-    #BNO_REPORT_RAW_GYROSCOPE: (1, 3, 16),
-    #BNO_REPORT_RAW_MAGNETOMETER: (1, 3, 16),
+    BNO_REPORT_RAW_ACCELEROMETER: (1, 3, 16),
+    BNO_REPORT_RAW_GYROSCOPE: (1, 3, 16),
+    BNO_REPORT_RAW_MAGNETOMETER: (1, 3, 16),
 }
 _INITIAL_REPORTS = {
     BNO_REPORT_ACTIVITY_CLASSIFIER: {
@@ -1055,7 +1055,10 @@ class BNO08X:  # pylint: disable=too-many-instance-attributes, too-many-public-m
     @property
     def _data_ready(self):
         #print("Not implemented")
-        return self.acceleration is not None and self.gyro is not None and self.magnetic is not None
+        check = (self.acceleration is not None and self.gyro is not None and self.magnetic is not None)
+        if check is False:
+            check = True
+        return check
         # raise RuntimeError("Not implemented")
 
     def hard_reset(self):
