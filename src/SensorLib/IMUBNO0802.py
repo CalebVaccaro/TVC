@@ -5,10 +5,7 @@ import sys
 from adafruit_bno08x import (
     BNO_REPORT_ACCELEROMETER,
     BNO_REPORT_GYROSCOPE,
-    BNO_REPORT_MAGNETOMETER,
-    BNO_REPORT_RAW_ACCELEROMETER,
-    BNO_REPORT_RAW_GYROSCOPE,
-    BNO_REPORT_RAW_MAGNETOMETER
+    BNO_REPORT_MAGNETOMETER
 )
 from SensorLib.BNO080.adafruit_bno08x.i2c import BNO08X2_I2C
 from SensorLib.IMUFusion import Fusion
@@ -30,19 +27,16 @@ class BNO2_IMU:
         bno.enable_feature(BNO_REPORT_ACCELEROMETER)
         bno.enable_feature(BNO_REPORT_GYROSCOPE)
         bno.enable_feature(BNO_REPORT_MAGNETOMETER)
-        bno.enable_feature(BNO_REPORT_RAW_ACCELEROMETER)
-        bno.enable_feature(BNO_REPORT_RAW_GYROSCOPE)
-        bno.enable_feature(BNO_REPORT_RAW_MAGNETOMETER)
         BNO2_IMU.imu = bno
         print("IMU-BNO0802 Is Communicating")
         return bno
 
     def getFusionData():
         bno = BNO2_IMU.imu
-        if bno._data_ready is None:
+        if bno._data_ready is False:
             return BNO2_IMU.getRefinedData((0,0))
         try:
-            if bno._data_ready is None:
+            if bno._data_ready is False:
                 return BNO2_IMU.getRefinedData((0,0))
             ax, ay, az = bno.acceleration
             gx, gy, gz = bno.gyro
@@ -54,10 +48,10 @@ class BNO2_IMU:
 
     def getRawData():
         bno = BNO2_IMU.imu
-        if bno._data_ready is None:
+        if bno.acceleration is False:
             return BNO2_IMU.getRefinedData((0,0,0))
         try:
-            if bno._data_ready is None:
+            if bno.acceleration is False:
                 return BNO2_IMU.getRefinedData((0,0,0))
             ax, ay, az = bno.acceleration
             gx, gy, gz = bno.gyro

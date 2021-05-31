@@ -33,10 +33,10 @@ class BNO_IMU:
 
     def getFusionData():
         bno = BNO_IMU.imu
-        if bno._data_ready is None:
+        if bno.acceleration is False:
             return BNO_IMU.getRefinedData((0,0))
         try:
-            if bno._data_ready is None:
+            if bno.acceleration is False:
                 return BNO_IMU.getRefinedData((0,0))
             ax, ay, az = bno.acceleration
             gx, gy, gz = bno.gyro
@@ -48,10 +48,10 @@ class BNO_IMU:
 
     def getRawData():
         bno = BNO_IMU.imu
-        if bno._data_ready is None:
+        if bno._data_ready is False:
             return BNO_IMU.getRefinedData((0,0,0))
         try:
-            if bno._data_ready is None:
+            if bno._data_ready is False:
                 return BNO_IMU.getRefinedData((0,0,0))
             ax, ay, az = bno.acceleration
             gx, gy, gz = bno.gyro
