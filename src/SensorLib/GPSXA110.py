@@ -26,10 +26,10 @@ class XGPS:
 
     def getRawData():
         gps = XGPS.gps
-        while True:
-            if gps.get_nmea_data() is True:
-                return json.dumps(gps.gnss_messages, sort_keys=True, default=str)
-     
+        #while True:
+        if gps.get_nmea_data() is True:
+            return json.dumps(gps.gnss_messages, sort_keys=True, default=str)
+ 
 #if __name__ == 'XGPS':
     #try:
         #GPS = getSensor()

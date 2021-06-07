@@ -30,4 +30,5 @@ if __name__ == '__main__':
     c.controlSwitch(control)
     
     # Start Logging Data
+    l.LogVisuals()
     l.LogInfo()

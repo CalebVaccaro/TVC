@@ -389,7 +389,7 @@ class Packet:
     def __str__(self):
 
         length = self.header.packet_byte_count
-        outstr = "\n\t\t********** BNO1 Packet *************\n"
+        outstr = "\n\t\t********** BNO2 Packet *************\n"
         outstr += "DBG::\t\t HEADER:\n"
 
         outstr += "DBG::\t\t Data Len: %d\n" % (self.header.data_length)
@@ -859,7 +859,7 @@ class BNO08X:  # pylint: disable=too-many-instance-attributes, too-many-public-m
             while len(self._packet_slices) > 0:
                 self._process_report(*self._packet_slices.pop())
         except Exception as error:
-            print("BNO1" + packet)
+            print(packet)
             # raise error
 
     def _handle_control_report(self, report_id, report_bytes):

@@ -90,6 +90,8 @@ class ControlClass():
         Validation.ValidateBattery()
         sleep(1)
         Validation.ValidateSensors()
+        sleep(1)
+        Validation.ValidateTVCMount(False)
         
     def ARMED():
         sleep(2)
