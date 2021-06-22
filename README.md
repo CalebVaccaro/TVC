@@ -3,7 +3,7 @@ Create and Validate a working Thrust Vector Control mount and feedback algorithm
 
 ![alt text](https://people.rit.edu/cxvihst/wholesystem1.jpg)
 
-## Flights
+## Flights (No Flight Computer, Testing Aerodynamics of Custom Rocket)
 
 ![alt text](https://people.rit.edu/cxvihst/December19.PNG)
 
